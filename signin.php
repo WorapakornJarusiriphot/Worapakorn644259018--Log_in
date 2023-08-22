@@ -21,7 +21,9 @@ session_start();
     <div class="main-container">
         <div class="woja-section">
             <div class="woja-logo">WOJA</div>
-            <div class="woja-description">WOJA เชื่อมต่อด้วยความจริงใจ แชร์ด้วยความห่วงใย ให้โลกนี้เต็มไปด้วยความรักและความสุข</div>
+            <div class="woja-description">WOJA เชื่อมต่อด้วยความจริงใจ แชร์ด้วยความห่วงใย</div>
+            <div class="woja-description">สร้างโลกที่สดใส ด้วยความห่วงใยจากเรา</div>
+
         </div>
 
         <div class="container">
