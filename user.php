@@ -2,11 +2,30 @@
 session_start();
 require_once 'config/db.php';
 
-if (!isset($_SESSION['user_login'])) {
-    $_SESSION['error'] = "Please signin to the system";
-    header("location:signin.php");
+class User {
+    private $conn;
+
+    public function __construct($connection) {
+        $this->conn = $connection;
+        if (!isset($_SESSION['user_login'])) {
+            $_SESSION['error'] = "Please signin to the system";
+            header("location:signin.php");
+        }
+    }
+
+    public function fetchUserData($user_id) {
+        $stmt = $this->conn->query("SELECT * FROM users WHERE id=$user_id");
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }
+
+$db = new Database();
+$conn = $db->getConnection();
+$user = new User($conn);
+$userData = $user->fetchUserData($_SESSION['user_login']);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,19 +39,11 @@ if (!isset($_SESSION['user_login'])) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=K2D&family=Kanit:ital,wght@0,400;1,900&display=swap" rel="stylesheet">
     <link href="./user.css" rel="stylesheet">
-</head>
+    </head>
 
 <body>
     <div class="container">
-        <?php
-        if (isset($_SESSION['user_login'])) {
-            $user_id = $_SESSION['user_login'];
-            $stmt = $conn->query("SELECT * FROM users WHERE id=$user_id");
-            $stmt->execute();
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        }
-        ?>
-        <h3 class="mt-4">Welcome <?php echo $row['firstname'] . ' ' . $row['lastname'];
+        <h3 class="mt-4">Welcome <?php echo $userData['firstname'] . ' ' . $userData['lastname'];
                                     $conn = null; ?>. You are User.</h3>
         <a href="logout.php" class="btn btn-danger">Logout</a>
         <a href="BMI/index2.php" class="btn btn-primary">Go to BMI Web Application</a>

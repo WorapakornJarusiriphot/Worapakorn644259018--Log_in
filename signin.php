@@ -1,7 +1,18 @@
 <?php
 session_start();
-//require_once 'config/db.php';
+
+class SignIn {
+    public function displayMessage($type) {
+        if (isset($_SESSION[$type])) {
+            echo $_SESSION[$type];
+            unset($_SESSION[$type]);
+        }
+    }
+}
+
+$signIn = new SignIn();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,33 +35,23 @@ session_start();
             <div class="woja-description">WOJA เชื่อมต่อด้วยความจริงใจ แชร์ด้วยความห่วงใย</div>
             <div class="woja-description">สร้างโลกที่สดใส ด้วยความห่วงใยจากเรา</div>
 
-        </div>
-
+            </div>
         <div class="container">
             <h3>Sign In</h3>
             <form action="signin_db.php" method="POST">
                 <?php if (isset($_SESSION['error'])) { ?>
                     <div class="alert alert-danger" role="alert">
-                        <?php
-                        echo $_SESSION['error'];
-                        unset($_SESSION['error']);
-                        ?>
+                        <?php $signIn->displayMessage('error'); ?>
                     </div>
                 <?php } ?>
                 <?php if (isset($_SESSION['warning'])) { ?>
                     <div class="alert alert-warning" role="alert">
-                        <?php
-                        echo $_SESSION['warning'];
-                        unset($_SESSION['warning']);
-                        ?>
+                        <?php $signIn->displayMessage('warning'); ?>
                     </div>
                 <?php } ?>
                 <?php if (isset($_SESSION['success'])) { ?>
                     <div class="alert alert-success" role="alert">
-                        <?php
-                        echo $_SESSION['success'];
-                        unset($_SESSION['success']);
-                        ?>
+                        <?php $signIn->displayMessage('success'); ?>
                     </div>
                 <?php } ?>
                 <div class="mb-3">

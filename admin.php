@@ -2,11 +2,38 @@
 session_start();
 require_once 'config/db.php';
 
-if (!isset($_SESSION['admin_login'])) {
-    $_SESSION['error'] = "Please signin to the system";
-    header("location:signin.php");
+class Admin {
+    private $conn;
+    private $admin_id;
+    private $admin_data;
+
+    public function __construct($connection) {
+        $this->conn = $connection;
+        if (!isset($_SESSION['admin_login'])) {
+            $_SESSION['error'] = "Please signin to the system";
+            header("location:signin.php");
+        } else {
+            $this->admin_id = $_SESSION['admin_login'];
+            $this->loadAdminData();
+        }
+    }
+
+    private function loadAdminData() {
+        $stmt = $this->conn->query("SELECT * FROM users WHERE id=" . $this->admin_id);
+        $stmt->execute();
+        $this->admin_data = $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getAdminName() {
+        return $this->admin_data['firstname'] . ' ' . $this->admin_data['lastname'];
+    }
 }
+
+$db = new Database();
+$conn = $db->getConnection();
+$admin = new Admin($conn);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,20 +47,11 @@ if (!isset($_SESSION['admin_login'])) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=K2D&family=Kanit:ital,wght@0,400;1,900&display=swap" rel="stylesheet">
     <link href="./admin.css" rel="stylesheet">
-</head>
+    </head>
 
 <body>
     <div class="container">
-        <?php
-        if (isset($_SESSION['admin_login'])) {
-            $admin_id = $_SESSION['admin_login'];
-            $stmt = $conn->query("SELECT * FROM users WHERE id=$admin_id");
-            $stmt->execute();
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        }
-        ?>
-        <h3 class="mt-4">Welcome <?php echo $row['firstname'] . ' ' . $row['lastname'];
-                                    $conn = null; ?>. You are Administrator.</h3>
+        <h3 class="mt-4">Welcome <?php echo $admin->getAdminName(); $conn = null; ?>. You are Administrator.</h3>
         <a href="logout.php" class="btn btn-danger">Logout</a>
         <a href="BMI/index.php" class="btn btn-primary">Go to BMI Web Application</a>
     </div>

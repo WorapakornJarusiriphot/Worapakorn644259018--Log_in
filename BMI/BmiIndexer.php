@@ -11,6 +11,7 @@ class BmiIndexer
     private $user = 'root';
     private $pass = '';
     private $conn;
+    private $human;
 
     public function __construct() {
         try {
@@ -21,8 +22,6 @@ class BmiIndexer
             echo "Error: " . $e->getMessage();
         }
     }
-
-    private $human;
 
     public function setHuman($human)
     {

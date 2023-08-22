@@ -1,7 +1,19 @@
 <?php
 session_start();
-//require_once 'config/db.php';
+// require_once 'config/db.php';
+
+class Register {
+    public function displayMessage($type) {
+        if (isset($_SESSION[$type])) {
+            echo $_SESSION[$type];
+            unset($_SESSION[$type]);
+        }
+    }
+}
+
+$register = new Register();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +27,7 @@ session_start();
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=K2D&family=Kanit:ital,wght@0,400;1,900&display=swap" rel="stylesheet">
     <link href="./index.css" rel="stylesheet">
-</head>
+    </head>
 
 <body>
     <div class="container">
@@ -24,26 +36,17 @@ session_start();
         <form action="signup_db.php" method="POST">
             <?php if (isset($_SESSION['error'])) { ?>
                 <div class="alert alert-danger" role="alert">
-                    <?php
-                    echo $_SESSION['error'];
-                    unset($_SESSION['error']);
-                    ?>
+                    <?php $register->displayMessage('error'); ?>
                 </div>
             <?php } ?>
             <?php if (isset($_SESSION['warning'])) { ?>
                 <div class="alert alert-warning" role="alert">
-                    <?php
-                    echo $_SESSION['warning'];
-                    unset($_SESSION['warning']);
-                    ?>
+                    <?php $register->displayMessage('warning'); ?>
                 </div>
             <?php } ?>
             <?php if (isset($_SESSION['success'])) { ?>
                 <div class="alert alert-success" role="alert">
-                    <?php
-                    echo $_SESSION['success'];
-                    unset($_SESSION['success']);
-                    ?>
+                    <?php $register->displayMessage('success'); ?>
                 </div>
             <?php } ?>
             <div class="mb-3">

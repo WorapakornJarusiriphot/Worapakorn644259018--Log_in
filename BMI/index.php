@@ -1,11 +1,33 @@
 <?php
 session_start();
-require_once '../config/db.php';
+require_once 'config/db.php';
 
-if (!isset($_SESSION['admin_login'])) {
-    $_SESSION['error'] = "Please signin to the system";
-    header("location:/ปี%203%20เทอม%201/สถาปัตยกรรมซอฟต์แวร์/งาน/งานที่%203%20log%20in3/PHP_PDO_MySQL_Bootstrap5_Register_Login_System-main/signin.php");
+class Admin {
+    private $conn;
+    
+    public function __construct($connection) {
+        $this->conn = $connection;
+    }
+    
+    public function checkAdminSession() {
+        if (!isset($_SESSION['admin_login'])) {
+            $_SESSION['error'] = "Please signin to the system";
+            header("location:/ปี%203%20เทอม%201/สถาปัตยกรรมซอฟต์แวร์/งาน/งานที่%203%20log%20in3/PHP_PDO_MySQL_Bootstrap5_Register_Login_System-main/signin.php");
+        }
+    }
+    
+    public function fetchUserData($user_id) {
+        $stmt = $this->conn->query("SELECT * FROM users WHERE id=$user_id");
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }
+
+$db = new Database();
+$conn = $db->getConnection();
+$user = new Admin($conn);
+$user->checkAdminSession();
+$userData = $user->fetchUserData($_SESSION['admin_login']);
 ?>
 
 
