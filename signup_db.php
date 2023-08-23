@@ -65,7 +65,7 @@ class SignUpDB {
             $row = $check_email->fetch(PDO::FETCH_ASSOC);
 
             if ($row['email'] == $email) {
-                $_SESSION['warning'] = "This email is already in System <a href='signup.php'>Click here</a> to signin";
+                $_SESSION['warning'] = "This email is already in System <a href='signin.php'>Click here</a> to signin";
                 $this->conn = null;
                 header("location: index.php");
             } else {

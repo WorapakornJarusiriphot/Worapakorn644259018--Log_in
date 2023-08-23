@@ -73,7 +73,7 @@ $register = new Register();
                 <input type="checkbox" class="form-check-input" id="exampleCheck1">
                 <label class="form-check-label" for="exampleCheck1">Check me out</label>
             </div> -->
-            <button type="submit" class="btn btn-primary" name="signup">Sing Up</button>
+            <button type="submit" class="btn btn-primary" name="signup">Sign Up</button>
         </form>
         <br>
         <p>You are already signed up, <a href="signin.php">Click here</a> to sign in. </p>
