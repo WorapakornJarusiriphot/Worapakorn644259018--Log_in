@@ -66,7 +66,7 @@ $signIn = new SignIn();
                     <input type="checkbox" class="form-check-input" id="exampleCheck1">
                     <label class="form-check-label" for="exampleCheck1">Check me out</label>
                 </div>
-                <button type="submit" class="btn btn-primary" name="signin">Sing In</button>
+                <button type="submit" class="btn btn-primary" name="signin">Sign In</button>
             </form>
             <br>
             <p>Not the member <a href="index.php">Click here</a> to register</p>

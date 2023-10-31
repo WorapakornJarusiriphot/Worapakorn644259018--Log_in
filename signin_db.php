@@ -74,7 +74,7 @@ class SignInDB {
             } else {
                 $_SESSION['warning'] = "This user is not found. <a href='index.php'>Click here</a> to register";
                 $this->conn = null;
-                header("location: signup.php");
+                header("location: index.php");
             }
         } catch (PDOException $e) {
             $_SESSION['error'] = "There is some error: " . $e->getMessage();
